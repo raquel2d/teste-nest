@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  compose_nest:
+    image: compose_nest
+    build: .
+    container_name: compose_nest
+    #restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app:/usr/app/app
+    # env_file:
+    #   - .env
