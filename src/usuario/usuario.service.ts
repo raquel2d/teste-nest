@@ -1,9 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import {
-  RespostaUsuarioCadastrarDto,
-  UsuarioCadastrarDto,
-} from './dto/usuario.dto';
+import { UsuarioCadastrarDto } from './dto/usuario.dto';
 import { User } from './usuario.entity';
 
 @Injectable()
@@ -17,20 +14,6 @@ export class UserService {
     return this.UserRepository.find();
   }
   async cadastrar(data: UsuarioCadastrarDto) {
-    const user = new User();
-    user.name = data.name;
-    user.email = data.email;
-    user.password = data.password;
-
-    await this.UserRepository.save(user)
-      .then(() => {
-        return <RespostaUsuarioCadastrarDto>{
-          name: user.name,
-          email: user.email,
-        };
-      })
-      .catch((err) => {
-        return { message: err };
-      });
+    return this.UserRepository.save(this.UserRepository.create(data));
   }
 }
